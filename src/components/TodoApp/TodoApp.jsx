@@ -3,18 +3,26 @@ import { TodoList } from '../TodoList/TodoList';
 
 export const TodoApp = () => {
   const [todos, setTodos] = useState([]);
-  const [newTodo, setNewTodo] = useState('');
-  const [todoTitle, setTodoTitle] = useState('');
+  const [newTodo, setNewTodo] = useState({});
+  const [todoTitle, setTodoTitle] = useState('title');
 
   const addTodo = (event) => {
-    console.log(event.target.value);
+    if (event.key === 'Enter') {
+      setNewTodo({
+        id: todos.length,
+        title: todoTitle,
+        completed: false,
+      });
+
+      setTodos([...todos, newTodo]);
+    }
   };
 
   return (
     <>
       <header className="header">
         <h1>todos</h1>
-        <form>
+        <form onSubmit={event => event.preventDefault()}>
           <input
             type="text"
             className="new-todo"
